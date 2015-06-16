@@ -234,7 +234,15 @@ def make_name_access_maps(bk):
             name_map[name_lcase] = [sort_data]
     for key in name_map.keys():
         alist = name_map[key]
-        alist.sort()
+        """
+            alist.sort()
+            this part can throw an TypeError: unorderable types: Name() < Name().
+        """
+        try:
+            alist.sort()
+        except TypeError:
+            pass
+        
         name_map[key] = [x[2] for x in alist]
     bk.name_and_scope_map = name_and_scope_map
     bk.name_map = name_map
